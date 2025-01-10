@@ -12,6 +12,8 @@ function MyApp() {
     setCharacters(updated);
   }
 
+  // note : the spread operator basically takes the existing characters array
+  // then creates a new array that has person appended to the end of the existing.
   function updateList(person) {
     setCharacters([...characters, person]);
   }
