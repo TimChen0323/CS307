@@ -12,6 +12,10 @@ function MyApp() {
     setCharacters(updated);
   }
 
+  function updateList(person) {
+    setCharacters([...characters, person]);
+  }
+
   // characterData is arbitrary name, braces are because "characters" is a js expr within html
   return (
     <div className="container">
@@ -19,7 +23,7 @@ function MyApp() {
       characterData={characters} 
       removeCharacter={removeOneCharacter}
       />
-      <Form />
+      <Form handleSubmit={updateList} />
     </div>
   );
 }
