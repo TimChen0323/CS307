@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+
+// note : overall, what this does is everytime a new letter is typed (onChange), it updates the state
+// depending on if it was written in the job or name field. When submit is pressed, it updates the 
+// table with the state, then resets it back to default, clearing the fields. 
 function Form(props) {
     const [person, setPerson] = useState({
         name: "",
