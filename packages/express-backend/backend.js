@@ -100,8 +100,8 @@ app.get("/users/:id", (req, res) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   userToAdd.id = generateID().toString();
-  addUser(userToAdd);
-  res.status(201).send();
+  const addedUser = addUser(userToAdd);
+  res.status(201).send(addedUser);
 });
 
 app.delete("/users/:id", (req, res) => {
