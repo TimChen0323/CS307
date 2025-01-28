@@ -57,6 +57,10 @@ const removeUser = (id) => {
     );
 };
 
+const generateID = () => {
+    return Math.random()
+}
+
 const app = express();
 const port = 8000;
 
@@ -95,8 +99,9 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+  userToAdd.id = generateID().toString();
   addUser(userToAdd);
-  res.send();
+  res.status(201).send();
 });
 
 app.delete("/users/:id", (req, res) => {
