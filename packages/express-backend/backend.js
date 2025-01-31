@@ -32,7 +32,7 @@ app.get("/users", (req, res) => {
   const name = req.query.name;
   const job = req.query.job;
   if (name) {
-    UserService.findUserByName(job)
+    UserService.findUserByName(name)
       .then(users => res.send({ users_list: users }))
       .catch(error => res.status(500).send(error));
   }
@@ -55,7 +55,7 @@ app.get("/users/:id", (req, res) => {
       if (user == null) {
         res.status(404).send("Resource not found.");
       } else {
-          res.send(result);
+          res.send(user);
       }  
     })
     .catch(error => res.status(500).send(error));
