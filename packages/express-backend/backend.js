@@ -5,10 +5,6 @@ import userService from "./services/user-service.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-const generateID = () => {
-    return Math.random()
-}
-
 dotenv.config();
 
 const { MONGO_CONNECTION_STRING } = process.env;
@@ -31,21 +27,9 @@ app.get("/", (req, res) => {
 app.get("/users", (req, res) => {
   const name = req.query.name;
   const job = req.query.job;
-  if (name) {
-    UserService.findUserByName(name)
-      .then(users => res.send({ users_list: users }))
-      .catch(error => res.status(500).send(error));
-  }
-  else if (job) {
-    UserService.findUserByJob(job)
-      .then(users => res.send({ users_list: users }))
-      .catch(error => res.status(500).send(error));
-  }
-  else {
-    UserService.getUsers()
-      .then(users => res.send({ users_list: users }))
-      .catch(error => res.status(500).send(error));
-  }
+  UserService.getUsers(name, job)
+    .then(users => res.send({ users_list: users }))
+    .catch(error => res.status(500).send(error));
 });
 
 app.get("/users/:id", (req, res) => {
@@ -63,10 +47,17 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  userToAdd.id = generateID().toString();
   userService.addUser(userToAdd)
     .then(addedUser => res.status(201).send(addedUser))
+    .catch(error => res.status(500).send(error));
 });
+
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  userService.deleteUserById(id)
+    .then(deletedUser => {res.status(204).send(deletedUser)})
+    .catch(error => res.status(500).send(error));
+})
 
 app.listen(port, () => {
   console.log(
